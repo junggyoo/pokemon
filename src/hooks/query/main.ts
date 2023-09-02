@@ -1,7 +1,8 @@
-import MainService from '@/services/main/MainService';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 
-const useInfinitePokeQuery = () => {
+import MainService from '@/services/main/MainService';
+
+const useInfinitePokemonQuery = () => {
   const { data, isLoading, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: 'pokemonList',
@@ -23,4 +24,17 @@ const useInfinitePokeQuery = () => {
   };
 };
 
-export { useInfinitePokeQuery };
+const usePokemonQuery = (pokemonId: string) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['pokemon', pokemonId],
+    queryFn: () => MainService.fetchPokemonSearch(pokemonId),
+    refetchOnWindowFocus: false,
+  });
+
+  return {
+    data: data?.pokemon,
+    isLoading,
+  };
+};
+
+export { useInfinitePokemonQuery, usePokemonQuery };

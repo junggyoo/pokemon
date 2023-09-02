@@ -27,4 +27,18 @@ export default class MainService {
       next: data.next,
     };
   }
+
+  static async fetchPokemonSearch(pokemonId: string) {
+    const { data } = await api.get(`/pokemon/${pokemonId}`);
+
+    const pokemon = {
+      name: data.name,
+      id: data.id,
+      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
+    };
+
+    return {
+      pokemon,
+    };
+  }
 }

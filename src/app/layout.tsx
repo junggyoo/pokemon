@@ -1,9 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import Header from '@/components/Header';
+
 import './globals.css';
+import HeadInfo from './HeadInfo';
 
 export default function RootLayout({
   children,
@@ -14,10 +18,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+      <HeadInfo />
+      <body className="h-screen">
+        <RecoilRoot>
+          <QueryClientProvider client={queryClient}>
+            <Header />
+            {children}
+          </QueryClientProvider>
+        </RecoilRoot>
       </body>
     </html>
   );

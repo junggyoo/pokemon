@@ -1,15 +1,18 @@
 'use client';
 
-import { useObserver } from '@/hooks/helper/useObserver';
-import { useInfinitePokeQuery } from '@/hooks/query/main';
-import { PokemonListItem } from '@/services/main/type';
 import { useRef } from 'react';
+
+import { PokemonListItem } from '@/services/main/type';
+
+import { useObserver } from '@/hooks/helper/useObserver';
+import { useInfinitePokemonQuery } from '@/hooks/query/main';
+
 import PokemonCard from './components/PokemonCard';
 
 export default function MainBody() {
-  const { data, isLoading, isFetchingNextPage, fetchNextPage } =
-    useInfinitePokeQuery();
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const { data, isFetchingNextPage, fetchNextPage } = useInfinitePokemonQuery();
 
   const onIntersect: (entries: IntersectionObserverEntry[]) => void = ([
     entry,
@@ -21,8 +24,6 @@ export default function MainBody() {
 
   return (
     <main className="px-80">
-      <h1 className="text-3xl font-bold underline">Hello Pokemon World!</h1>
-      {isLoading && <div>Loading...</div>}
       <div className="grid grid-cols-5 gap-4">
         {data?.pages.map((page) =>
           page.pokemons.map((pokemon: PokemonListItem) => (
