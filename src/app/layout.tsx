@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import './globals.css';
+
 export default function RootLayout({
   children,
 }: {

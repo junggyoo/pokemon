@@ -12,6 +12,7 @@ const useInfinitePokeQuery = () => {
         if (!next) return false;
         return Number(new URL(next).searchParams.get('offset'));
       },
+      refetchOnWindowFocus: false,
     });
 
   return {
