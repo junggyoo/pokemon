@@ -24,11 +24,12 @@ export default function MainBody() {
 
   return (
     <main className="px-80">
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4 h-auto">
         {data?.pages.map((page) =>
           page.pokemons.map((pokemon: PokemonListItem) => (
             <PokemonCard
               key={pokemon.id}
+              id={pokemon.id}
               name={pokemon.name}
               img={pokemon.img}
             />

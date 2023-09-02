@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <HeadInfo />
-      <body className="h-screen">
+      <body className="h-full">
         <RecoilRoot>
           <QueryClientProvider client={queryClient}>
             <Header />

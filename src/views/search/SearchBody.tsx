@@ -10,11 +10,11 @@ export default function SearchBody() {
   const pokemon = useRecoilValue(searchedPokemonState);
 
   return (
-    <main className="px-80">
+    <main className="h-screen px-80">
       <div className="grid grid-cols-5 gap-4">
         {pokemon.name && (
           <PokemonCard
-            key={pokemon?.id}
+            id={pokemon?.id}
             name={pokemon?.name}
             img={pokemon?.img}
           />
