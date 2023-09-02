@@ -1,21 +1,38 @@
 'use client';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
+import { AxiosError } from 'axios';
 
 import MainService from '@/services/main/MainService';
 
 import { searchedPokemonState, searchKeywordState } from '@/recoil/main/atom';
+import { isNotFoundErrorState } from '@/recoil/global/atom';
 
 export default function Header() {
   const router = useRouter();
 
   const [searchKeyword, setSearchKeyword] = useRecoilState(searchKeywordState);
   const setSearchedPokemon = useSetRecoilState(searchedPokemonState);
+  const resetSeachedPokemon = useResetRecoilState(searchedPokemonState);
+  const setIsNotFoundError = useSetRecoilState(isNotFoundErrorState);
 
   const handleSearch = async () => {
-    const { pokemon } = await MainService.fetchPokemonSearch(searchKeyword);
-    setSearchedPokemon(pokemon);
+    try {
+      setIsNotFoundError(false);
+      const { pokemon } = await MainService.fetchPokemonSearch(searchKeyword);
+      setSearchedPokemon(pokemon);
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      if (
+        axiosError.isAxiosError &&
+        axiosError.response?.data === 'Not Found'
+      ) {
+        resetSeachedPokemon();
+        setIsNotFoundError(true);
+      }
+    }
+
     router.push(`/search`);
   };
 
