@@ -1,8 +1,8 @@
 'use client';
 
-import { usePokemonEvolutionQuery } from '@/hooks/query/detail';
-import DetailService from '@/services/detail/DetailService';
 import { useEffect } from 'react';
+
+import { usePokemonEvolutionQuery } from '@/hooks/query/detail';
 
 import PokemonCard from '../main/components/PokemonCard';
 

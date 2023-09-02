@@ -1,31 +1,23 @@
-'use client';
-
-import { useState } from 'react';
-import { RecoilRoot } from 'recoil';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
 import Header from '@/components/Header';
 
+import Head from './Head';
+import Providers from './Provider';
+
 import './globals.css';
-import HeadInfo from './HeadInfo';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
     <html lang="en">
-      <HeadInfo />
+      <Head />
       <body className="h-full">
-        <RecoilRoot>
-          <QueryClientProvider client={queryClient}>
-            <Header />
-            {children}
-          </QueryClientProvider>
-        </RecoilRoot>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

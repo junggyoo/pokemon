@@ -25,6 +25,7 @@ export default function Header() {
 
   const handleTitleClick = () => {
     router.push(`/`);
+    setSearchKeyword('');
   };
 
   return (

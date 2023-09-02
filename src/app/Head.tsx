@@ -1,4 +1,4 @@
-export default function HeadInfo() {
+export default function Head() {
   return (
     <head>
       <title>Pokemon</title>
