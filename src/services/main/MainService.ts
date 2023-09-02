@@ -18,12 +18,8 @@ export default class MainService {
 
       const { data: pokemonData } = await api.get(`/pokemon-species/${id}`);
 
-      const koreanNameEntry = pokemonData.names.find(
-        (nameEntry: NameEntry) => nameEntry.language.name === 'ko'
-      );
-
       return {
-        name: koreanNameEntry ? koreanNameEntry.name : pokemon.name,
+        name: getKoreanName(pokemonData.names),
         id,
         img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
       };
@@ -38,10 +34,10 @@ export default class MainService {
   }
 
   static async fetchPokemonSearch(pokemonId: string) {
-    const { data } = await api.get(`/pokemon/${pokemonId}`);
+    const { data } = await api.get(`/pokemon-species/${pokemonId}`);
 
     const pokemon = {
-      name: data.name,
+      name: getKoreanName(data.names),
       id: data.id,
       img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
     };
@@ -51,3 +47,11 @@ export default class MainService {
     };
   }
 }
+
+const getKoreanName = (names: NameEntry[]) => {
+  const koreanNameEntry = names.find(
+    (nameEntry: NameEntry) => nameEntry.language.name === 'ko'
+  );
+
+  return koreanNameEntry ? koreanNameEntry.name : names[0].name;
+};
