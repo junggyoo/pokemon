@@ -1,4 +1,5 @@
 import api from '@/axios';
+import { getKoreanName } from '@/utils';
 
 import { ChainLink, Evolution } from './type';
 
@@ -10,28 +11,43 @@ export default class DetailService {
 
     const { data: evolutionChainData } = await api.get(evolutionChainUrl);
 
-    const evolutionData = extractEvolutions(evolutionChainData.chain);
+    const evolutionData = await this.extractEvolutions(
+      evolutionChainData.chain
+    );
 
     return {
+      pokemonName: getKoreanName(data.names),
       evolutionData,
     };
   }
-}
 
-function extractEvolutions(chain: ChainLink): Evolution[] {
-  let evolutions = [
-    {
-      name: chain.species.name,
-      id: chain.species.url.split('/')[6],
-      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-        chain.species.url.split('/')[6]
-      }.png`,
-    },
-  ];
+  private static async extractEvolutions(
+    chain: ChainLink
+  ): Promise<Evolution[]> {
+    const { data: speciesData } = await api.get(
+      `/pokemon-species/${chain.species.url.split('/')[6]}`
+    );
 
-  if (chain.evolves_to.length) {
-    evolutions = [...evolutions, ...extractEvolutions(chain.evolves_to[0])];
+    let evolutions = [
+      {
+        name: getKoreanName(speciesData.names),
+        id: chain.species.url.split('/')[6],
+        img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+          chain.species.url.split('/')[6]
+        }.png`,
+      },
+    ];
+
+    const evolvesToPromises = chain.evolves_to.map((link) =>
+      this.extractEvolutions(link)
+    );
+
+    const evolvesToArray = await Promise.all(evolvesToPromises);
+
+    for (const evolvesTo of evolvesToArray) {
+      evolutions = [...evolutions, ...evolvesTo];
+    }
+
+    return evolutions;
   }
-
-  return evolutions;
 }

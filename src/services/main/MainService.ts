@@ -1,6 +1,8 @@
 import api from '@/axios';
 
-import { NameEntry, PokemonDto } from './type';
+import { getKoreanName } from '@/utils';
+
+import { PokemonDto } from './type';
 
 const LIMIT = 30;
 
@@ -47,11 +49,3 @@ export default class MainService {
     };
   }
 }
-
-const getKoreanName = (names: NameEntry[]) => {
-  const koreanNameEntry = names.find(
-    (nameEntry: NameEntry) => nameEntry.language.name === 'ko'
-  );
-
-  return koreanNameEntry ? koreanNameEntry.name : names[0].name;
-};

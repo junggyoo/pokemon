@@ -8,7 +8,6 @@ import PokemonCard from '../main/components/PokemonCard';
 
 interface PokemonDetailBodyProps {
   params: {
-    name: string;
     id: string;
   };
 }
@@ -23,14 +22,14 @@ export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
   return (
     <main className="h-screen px-80">
       <PokemonCard
-        name={params.name}
+        name={data?.pokemonName}
         id={params.id}
         img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${params.id}.png`}
       />
       <div className="w-full h-1 border-gray-700 border-t-2 my-10" />
       <h2 className="text-2xl mb-10">포켓몬 진화</h2>
       <div className="flex gap-10">
-        {data?.evolutionData.map((pokemon) => (
+        {data?.evolutionData?.map((pokemon) => (
           <PokemonCard
             key={pokemon.id}
             id={pokemon.id}

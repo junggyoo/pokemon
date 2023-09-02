@@ -10,7 +10,7 @@ import DetailService from '@/services/detail/DetailService';
 export default async function PokemonDetailPage({
   params,
 }: {
-  params: { name: string; id: string };
+  params: { id: string };
 }) {
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(['pokemonEvolution', params.id], () =>
