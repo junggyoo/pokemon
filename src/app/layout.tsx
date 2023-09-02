@@ -1,23 +1,22 @@
-import { Inter } from 'next/font/google';
-import type { Metadata } from 'next';
+'use client';
 
-import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Pokemon',
-  description: 'Pokemon',
-};
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
