@@ -1,11 +1,23 @@
 'use client';
 
+import { useObserver } from '@/hooks/helper/useObserver';
 import { useInfinitePokeQuery } from '@/hooks/query/main';
 import { PokemonListItem } from '@/services/main/type';
+import { useRef } from 'react';
 
 export default function Home() {
   const { data, isLoading, isFetchingNextPage, fetchNextPage } =
     useInfinitePokeQuery();
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const onIntersect: (entries: IntersectionObserverEntry[]) => void = ([
+    entry,
+  ]) => {
+    if (entry.isIntersecting) fetchNextPage();
+  };
+
+  useObserver({ target: bottomRef, onIntersect });
 
   return (
     <main>
@@ -21,7 +33,7 @@ export default function Home() {
           ))
         )}
       </div>
-      <button onClick={() => fetchNextPage()}>Load More</button>
+      <div ref={bottomRef} />
       {isFetchingNextPage && <div>Loading...</div>}
     </main>
   );
