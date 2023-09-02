@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import AppLayout from './AppLayout';
 
 import Head from './Head';
 import Providers from './Provider';
@@ -13,10 +13,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head />
-      <body className="h-full">
+      <body>
         <Providers>
-          <Header />
-          {children}
+          <AppLayout>{children}</AppLayout>
         </Providers>
       </body>
     </html>
