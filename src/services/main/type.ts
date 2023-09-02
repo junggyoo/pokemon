@@ -8,3 +8,10 @@ export interface PokemonListItem {
   id: string;
   img: string;
 }
+
+export interface NameEntry {
+  name: string;
+  language: {
+    name: string;
+  };
+}

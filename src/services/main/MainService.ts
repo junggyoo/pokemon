@@ -1,6 +1,6 @@
 import api from '@/axios';
 
-import { PokemonDto } from './type';
+import { NameEntry, PokemonDto } from './type';
 
 const LIMIT = 30;
 
@@ -13,14 +13,23 @@ export default class MainService {
       },
     });
 
-    const pokemons = data.results.map((pokemon: PokemonDto) => {
+    const pokemonPromises = data.results.map(async (pokemon: PokemonDto) => {
       const id = pokemon.url.split('/')[6];
+
+      const { data: pokemonData } = await api.get(`/pokemon-species/${id}`);
+
+      const koreanNameEntry = pokemonData.names.find(
+        (nameEntry: NameEntry) => nameEntry.language.name === 'ko'
+      );
+
       return {
-        name: pokemon.name,
+        name: koreanNameEntry ? koreanNameEntry.name : pokemon.name,
         id,
         img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
       };
     });
+
+    const pokemons = await Promise.all(pokemonPromises);
 
     return {
       pokemons,
