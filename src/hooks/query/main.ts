@@ -3,8 +3,9 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import MainService from '@/services/main/MainService';
 
 const useInfinitePokemonQuery = () => {
-  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery(['pokemonList'], {
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ['pokemonList'],
+    {
       queryFn: async ({ pageParam = 0 }) =>
         MainService.fetchPokemonList(pageParam),
       getNextPageParam: (lastPage) => {
@@ -12,11 +13,11 @@ const useInfinitePokemonQuery = () => {
         if (!next) return false;
         return Number(new URL(next).searchParams.get('offset'));
       },
-    });
+    }
+  );
 
   return {
     data,
-    isLoading,
     isFetchingNextPage,
     fetchNextPage,
   };

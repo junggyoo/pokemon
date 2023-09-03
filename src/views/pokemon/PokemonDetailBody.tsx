@@ -14,7 +14,7 @@ interface PokemonDetailBodyProps {
 }
 
 export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
-  const { data, isLoading } = usePokemonEvolutionQuery(params.id);
+  const { data } = usePokemonEvolutionQuery(params.id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +22,6 @@ export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
 
   return (
     <main className="h-screen px-80">
-      {isLoading && <Loading />}
       <PokemonCard
         name={data?.pokemonName}
         id={params.id}
