@@ -8,11 +8,13 @@ import { useObserver } from '@/hooks/helper/useObserver';
 import { useInfinitePokemonQuery } from '@/hooks/query/main';
 
 import PokemonCard from './components/PokemonCard';
+import Loading from '@/components/Loading';
 
 export default function MainBody() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const { data, isFetchingNextPage, fetchNextPage } = useInfinitePokemonQuery();
+  const { data, isFetchingNextPage, isLoading, fetchNextPage } =
+    useInfinitePokemonQuery();
 
   const onIntersect: (entries: IntersectionObserverEntry[]) => void = ([
     entry,
@@ -24,6 +26,7 @@ export default function MainBody() {
 
   return (
     <main className="px-80">
+      {isLoading && <Loading />}
       <div className="grid grid-cols-5 gap-4 h-auto">
         {data?.pages.map((page) =>
           page.pokemons.map((pokemon: PokemonListItem) => (
@@ -37,7 +40,7 @@ export default function MainBody() {
         )}
       </div>
       <div ref={bottomRef} />
-      {isFetchingNextPage && <div>Loading...</div>}
+      {isFetchingNextPage && <Loading />}
     </main>
   );
 }

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { usePokemonEvolutionQuery } from '@/hooks/query/detail';
 
 import PokemonCard from '../main/components/PokemonCard';
+import Loading from '@/components/Loading';
 
 interface PokemonDetailBodyProps {
   params: {
@@ -13,7 +14,7 @@ interface PokemonDetailBodyProps {
 }
 
 export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
-  const { data } = usePokemonEvolutionQuery(params.id);
+  const { data, isLoading } = usePokemonEvolutionQuery(params.id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -21,6 +22,7 @@ export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
 
   return (
     <main className="h-screen px-80">
+      {isLoading && <Loading />}
       <PokemonCard
         name={data?.pokemonName}
         id={params.id}
