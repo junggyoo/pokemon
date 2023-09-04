@@ -16,7 +16,12 @@ export default async function PokemonDetailPage({ params }: PageProps) {
 export const generateMetadata = async ({ params }: PageProps) => {
   const { id } = params;
 
-  const { pokemonName } = await DetailService.fetchPokemonSpecies(params.id);
+  const getPokemonName = cache(async () => {
+    const { pokemonName } = await DetailService.fetchPokemonSpecies(params.id);
+    return pokemonName;
+  });
+
+  const pokemonName = await getPokemonName();
 
   return {
     title: `${pokemonName} - 포켓몬 도감`,
