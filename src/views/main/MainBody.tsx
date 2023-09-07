@@ -18,7 +18,6 @@ export default function MainBody() {
   const onIntersect: (entries: IntersectionObserverEntry[]) => void = ([
     entry,
   ]) => {
-    console.log('entry', entry);
     if (entry.isIntersecting) fetchNextPage();
   };
 
