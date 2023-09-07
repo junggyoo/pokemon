@@ -18,6 +18,7 @@ export default function MainBody() {
   const onIntersect: (entries: IntersectionObserverEntry[]) => void = ([
     entry,
   ]) => {
+    console.log('entry', entry);
     if (entry.isIntersecting) fetchNextPage();
   };
 
@@ -37,7 +38,7 @@ export default function MainBody() {
           ))
         )}
       </div>
-      <div ref={bottomRef} />
+      <div style={{ height: '1px' }} ref={bottomRef} />
       {isFetchingNextPage && <Loading />}
     </main>
   );
