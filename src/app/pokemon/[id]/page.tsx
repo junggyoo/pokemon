@@ -1,7 +1,10 @@
 import { cache } from 'react';
 
 import DetailService from '@/services/detail/DetailService';
+
 import PokemonDetailBody from '@/views/pokemon/PokemonDetailBody';
+
+import { getPokemonImgUrl } from '@/utils';
 
 interface PageProps {
   params: {
@@ -43,7 +46,7 @@ export const generateMetadata = async ({ params }: PageProps) => {
       ],
       images: [
         {
-          url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+          url: getPokemonImgUrl(id),
           width: 300,
           height: 300,
         },

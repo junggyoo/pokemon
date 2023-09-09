@@ -2,13 +2,13 @@
 
 import { useRef } from 'react';
 
+import Loading from '@/components/Loading';
+import PokemonCard from './components/PokemonCard';
+
 import { PokemonListItem } from '@/services/main/type';
 
 import { useObserver } from '@/hooks/helper/useObserver';
 import { useInfinitePokemonQuery } from '@/hooks/query/main';
-
-import PokemonCard from './components/PokemonCard';
-import Loading from '@/components/Loading';
 
 export default function MainBody() {
   const bottomRef = useRef<HTMLDivElement>(null);

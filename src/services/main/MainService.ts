@@ -1,6 +1,6 @@
 import api from '@/axios';
 
-import { getKoreanName } from '@/utils';
+import { getKoreanName, getPokemonImgUrl } from '@/utils';
 
 import { PokemonDto } from './type';
 
@@ -23,7 +23,7 @@ export default class MainService {
       return {
         name: getKoreanName(pokemonData.names),
         id,
-        img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        img: getPokemonImgUrl(id),
       };
     });
 
@@ -41,7 +41,7 @@ export default class MainService {
     const pokemon = {
       name: getKoreanName(data.names),
       id: data.id,
-      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
+      img: getPokemonImgUrl(data.id),
     };
 
     return {

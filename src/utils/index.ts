@@ -7,3 +7,6 @@ export const getKoreanName = (names: NameEntry[]) => {
 
   return koreanNameEntry ? koreanNameEntry.name : names[0].name;
 };
+
+export const getPokemonImgUrl = (id: string) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;

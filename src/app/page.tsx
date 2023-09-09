@@ -1,5 +1,7 @@
 import MainBody from '@/views/main/MainBody';
 
+import { getPokemonImgUrl } from '@/utils';
+
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
     siteName: 'studiomate-pokemon',
     images: [
       {
-        url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+        url: getPokemonImgUrl('1'),
         width: 300,
         height: 300,
       },

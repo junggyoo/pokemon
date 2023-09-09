@@ -1,5 +1,6 @@
 import api from '@/axios';
-import { getKoreanName } from '@/utils';
+
+import { getKoreanName, getPokemonImgUrl } from '@/utils';
 
 import { ChainLink, Evolution } from './type';
 
@@ -24,17 +25,17 @@ export default class DetailService {
   private static async extractEvolutions(
     chain: ChainLink
   ): Promise<Evolution[]> {
+    const pokemonId = chain.species.url.split('/')[6];
+
     const { data: speciesData } = await api.get(
-      `/pokemon-species/${chain.species.url.split('/')[6]}`
+      `/pokemon-species/${pokemonId}`
     );
 
     let evolutions = [
       {
         name: getKoreanName(speciesData.names),
-        id: chain.species.url.split('/')[6],
-        img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-          chain.species.url.split('/')[6]
-        }.png`,
+        id: pokemonId,
+        img: getPokemonImgUrl(pokemonId),
       },
     ];
 

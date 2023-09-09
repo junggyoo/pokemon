@@ -2,10 +2,11 @@
 
 import { useEffect } from 'react';
 
+import PokemonCard from '../main/components/PokemonCard';
+
 import { usePokemonEvolutionQuery } from '@/hooks/query/detail';
 
-import PokemonCard from '../main/components/PokemonCard';
-import Loading from '@/components/Loading';
+import { getPokemonImgUrl } from '@/utils';
 
 interface PokemonDetailBodyProps {
   params: {
@@ -25,7 +26,7 @@ export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
       <PokemonCard
         name={data?.pokemonName}
         id={params.id}
-        img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${params.id}.png`}
+        img={getPokemonImgUrl(params.id)}
       />
       <div className="w-full h-1 border-gray-700 border-t-2 my-10" />
       <h2 className="text-2xl mb-10">포켓몬 진화</h2>
@@ -35,7 +36,7 @@ export default function PokemonDetailBody({ params }: PokemonDetailBodyProps) {
             key={pokemon.id}
             id={pokemon.id}
             name={pokemon.name}
-            img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+            img={getPokemonImgUrl(pokemon.id)}
           />
         ))}
       </div>
